@@ -1,7 +1,7 @@
 C_SOURCES = $(wildcard */*.c *.c)
 HEADERS = $(wildcard */*.h *.h)
 OBJ = ${C_SOURCES:.c=.o}
-C_FLAGS = -O3 -g
+C_FLAGS = -O3 -g -lcurl
 
 CC = gcc
 
@@ -19,12 +19,3 @@ run:
 clean:
 	rm -f */*.o *.o 
 	rm -f ds_c_test
-#llc: 
-#	${CC} ${C_SOURCES} ${HEADERS} -o llc
-#
-#run:
-#	${CC} ${C_SOURCES} ${HEADERS} -o llc
-#	./llc
-#
-#clean:
-#	rm llc

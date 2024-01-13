@@ -1,0 +1,46 @@
+#include <curl/curl.h>
+#include <curl/easy.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+size_t got_data(char* buffer, size_t itemsize, size_t num_items, void *whoknows) {
+    size_t bytes = itemsize * num_items;
+
+    int line_num = 1;
+
+    printf("%zu bytes\n", bytes);
+
+    printf("%d\t", line_num);
+    for (int i = 0; i < bytes; i++) {
+        printf("%c", buffer[i]);
+        if (buffer[i] == '\n') {
+            line_num++;
+            printf("%d\t", line_num);
+        } 
+    }
+
+    puts("");
+
+    return bytes;
+}
+
+int main() {
+    CURL *curl = curl_easy_init();
+
+    if (!curl) {
+        fprintf(stderr, "failed\n");
+        return EXIT_FAILURE;
+    }
+
+    curl_easy_setopt(curl, CURLOPT_URL, "https://google.com");
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, got_data);
+
+    CURLcode result = curl_easy_perform(curl);
+
+    if (result != CURLE_OK) {
+        fprintf(stderr, "problem: %s\n", curl_easy_strerror(result));
+    }
+
+    curl_easy_cleanup(curl);
+    return EXIT_SUCCESS;
+}

@@ -36,7 +36,7 @@ void schedule_sort(Vector *vec) {
         }
         switch (pthread_setschedprio(thread_id[i], vec_val)) {
             case EINVAL: 
-                puts("Invalid proiority");
+                puts("Invalid priority");
                 break;
             case ENOTSUP:
                 puts("Unsupported value");
@@ -53,9 +53,9 @@ void schedule_sort(Vector *vec) {
         }
     }
 
-    free(thread_id);
-
     for (int i = 0; i < size; ++i) {
         pthread_join(thread_id[i], NULL);
     }
+
+    free(thread_id);
 }
