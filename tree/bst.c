@@ -19,23 +19,13 @@ inline bst_node* create_node(int64_t data) {
     return newnode;
 }
 
-void bst_add_rec(bst_node* node, int64_t data) {
-    if (data > node->data) {
-        if (node->right != NULL) bst_add_rec(node->right, data);
-        else node->right = create_node(data);
-    } else if (data < node->data) {
-        if (node->left != NULL) bst_add_rec(node->left, data);
-        else node->left = create_node(data);
-    } else return;
-}
-
 void bst_add(BST* tree, int64_t data) {
     if (data > tree->data) {
-        if (tree->right != NULL) bst_add_rec(tree->right, data);
+        if (tree->right != NULL) bst_add((BST*)tree->right, data);
         else tree->right = create_node(data);
     } else if (data < tree->data) {
-        if (tree->right != NULL) bst_add_rec(tree->right, data);
-        else tree->right = create_node(data);
+        if (tree->left != NULL) bst_add((BST*)tree->left, data);
+        else tree->left= create_node(data);
     } else return;
 }
 
@@ -45,6 +35,8 @@ void print_bst_inorder(BST* tree) {
     printf("%ld ", tree->data);
     print_bst_inorder((BST*)tree->right);
 }
+
+
 
 void delete_bst(BST* tree) {
     if (tree == NULL) return;
