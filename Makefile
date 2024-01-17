@@ -16,6 +16,9 @@ ds_c_test: ${OBJ}
 run:
 	./ds_c_test
 
+test:
+	valgrind ./ds_c_test
+
 clean:
 	rm -f */*.o *.o 
 	rm -f ds_c_test
